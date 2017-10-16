@@ -16,43 +16,28 @@ Intrare
 323
 Ieșire
 
-2
 
 <?php
 
 if (isset($_POST['calculeaza'])) {
     $a = !empty($_POST['a']) ? $_POST['a'] : '0';
     $mesaj = '';
-    $arr = [];
-    $arr = $a;
+    $counter = 0;
 
-
-    if (!is_numeric($arr))
+    if (!is_numeric($a))
     {
         $mesaj = 'Numerele introduse nu sunt corecte!';
     }
     if ($a < 100 || $a >= 999){
-        $mesaj = 'Numerele introduse nu sunt corecte!';
+        $mesaj = 'Numerul introdus trebuie sa fie intre 100 si 999!';
     } else {
-        function odd($var)
-        {
-            // întoarce true dacă numărul întreg transmis este impar
-            return($var & 1);
+        $lungimeSir = strlen($a);
+        for ($i = 0; $i< $lungimeSir; $i++){
+            if($a[$i] % 2 != 0){
+                $counter++;
+            }
         }
-
-        function even($var)
-        {
-            // întoarce true dacă numărul întreg transmis este par
-            return(!($var & 1));
-        }
-
-
-        echo "Odd :\n";
-        print_r(array_filter($arr, "odd"));
-        echo "Even:\n";
-        print_r(array_filter($arr, "even"));
-}
-
+    }
 }
 ?>
 <!doctype html>
@@ -63,12 +48,12 @@ if (isset($_POST['calculeaza'])) {
 <body>
 <div>
     <form method="post" action="">
-        A<input type="text" name="a" value="0"></br>
+        A<input type="text" name="a" value="<?php echo $a; ?>"></br>
         <input name="calculeaza" type="submit">
     </form>
     <?php
     if (isset($_POST['calculeaza'])) {
-        echo "<h1>Numerul introdus $a contine $arr[0] nr impare "."</h1>";
+        echo "<h1>Numerul introdus $a contine $counter nr impare "."</h1>";
     }
 
     if (!empty($mesaj)) {
